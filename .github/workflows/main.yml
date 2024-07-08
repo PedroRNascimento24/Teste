@@ -1,0 +1,18 @@
+name: DAST Scan
+on: [push]
+jobs:
+  dast_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkmarx DAST Github Action
+        uses: Checkmarx/dast-github-action@v1.0.0-beta
+        env:
+          CX_APIKEY: ${{ secrets.CX_ONE_API_KEY }}
+        with:
+          command: "web"
+          config: 'zap_config.yaml'
+          base_url: "localhost.cxast.net"
+          environment_id: "c608a51a-ec4e-4eef-81c4-a0241737efd7"
+          fail_on: "HIGH"
+          verbose: true
